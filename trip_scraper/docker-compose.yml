@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: scraper_user
+      POSTGRES_PASSWORD: scraper_password
+      POSTGRES_DB: scraper_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  scrapy:
+    build: .
+    container_name: scrapy_app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://scraper_user:scraper_password@db:5432/scraper_db
+    volumes:
+      - .:/app
+      - ./images:/images
+    command: /bin/sh -c "scrapy crawl hotel && tail -f /dev/null"
+volumes:
+  db_data:
