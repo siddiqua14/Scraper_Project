@@ -1,0 +1,36 @@
+ docker exec -it scrapy_app bash
+ pip install pytest pytest-mock requests_mock
+ coverage run -m pytest && coverage report
+ coverage report --show-missing
+
+Test Cases
+test_parse_city
+This test verifies the parse method for parsing inbound cities from the Trip.com website. It checks if the JSON data is correctly extracted from the page and if the city list is parsed successfully.
+
+Input: A page containing window.IBU_HOTEL with an inbound city.
+Expected Outcome: The city is parsed correctly, and the parse_hotel_list method is called with the correct URL.
+test_parse_hotel_list
+This test verifies the parse_hotel_list method for extracting hotel details such as hotelId, hotelName, price, commentScore, etc., from the list of hotels.
+
+Input: A page with a valid JSON response for hotel data.
+Expected Outcome: The test ensures that the hotels' data is extracted correctly.
+test_parse_hotel_list_empty
+This test checks how the spider handles cases where no hotels are available on the page. It ensures that the spider does not yield any hotel data when the list is empty.
+
+Input: A page where the hotel list is empty.
+Expected Outcome: The test should not return any hotel data.
+test_parse_hotel_list_missing_fields
+This test checks how the spider handles missing fields in the hotel data (e.g., missing hotelName, price, or commentScore). It ensures that missing fields are handled gracefully and default to None.
+
+Input: A page with incomplete hotel data (missing fields).
+Expected Outcome: The test ensures that the spider still yields the hotel data with missing fields defaulted to None.
+test_parse_no_script_found
+This test checks how the spider behaves when no <script> tag containing the window.IBU_HOTEL object is found in the page. It should log an error and not proceed further.
+
+Input: A page with no window.IBU_HOTEL script.
+Expected Outcome: The test should trigger the error handling in the spider and log the error "No script containing 'window.IBU_HOTEL' found!".
+test_parse_json_decode_error
+This test checks how the spider behaves when the JSON structure in the <script> tag is malformed or cannot be decoded. It should log a JSON decode error.
+
+Input: A page with invalid JSON.
+Expected Outcome: The test should trigger the error handling for JSON decoding issues and log the error "Failed to decode JSON".

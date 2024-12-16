@@ -17,7 +17,7 @@ This project is a web scraping application built using Scrapy that scrapes hotel
   - [Database Configuration](#database-configuration)
   - [Scrapy Pipeline](#scrapy-pipeline)
   - [Models](#models)
-- [Check Coverage Results](#check-coverage-results)
+- [Test and Coverage Results](#test-and-coverage-results)
 - [Troubleshooting](#troubleshooting)
 
 
@@ -120,7 +120,14 @@ The DatabasePipeline in pipelines.py handles saving the scraped data into the Po
 The Hotel class in models.py defines the database structure using SQLAlchemy ORM. It maps the scraped hotel data to the hotels table in PostgreSQL.
 
 
-## Check Coverage Results
+## Test and Coverage Results
+Before running the tests, ensure the following dependencies are installed:
+
+- **pytest**: Testing framework
+- **coverage**: Code coverage tool
+- **Scrapy**: Web scraping framework
+- **unittest.mock**: Mocking library for unit tests
+
 After the container finishes running the spider:
 - Access the container's shell:
 ```bash
@@ -128,7 +135,7 @@ docker exec -it scrapy_app bash
 ```
 - Generate the coverage report:
 ```bash
-coverage report -m
+pytest --cov=trip_scraper --cov-report=term-missing
 ```
 This will generate a code coverage report for your Scrapy spider.
 

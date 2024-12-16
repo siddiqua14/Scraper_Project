@@ -2,8 +2,6 @@ import scrapy
 import json
 import re
 import random
-import os
-import requests
 
 class HotelsSpider(scrapy.Spider):
     name = "hotel"

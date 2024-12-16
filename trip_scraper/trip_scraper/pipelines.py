@@ -2,14 +2,16 @@ import os
 import requests
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from .models import Hotel
+from .models import Hotel, Base, create_tables, db_connect
 
 class DatabasePipeline:
     def __init__(self):
         # Database connection setup
-        self.engine = create_engine('postgresql://scraper_user:scraper_password@db:5432/scraper_db')
+        self.engine = db_connect()  # Use db_connect for engine
+        create_tables(self.engine)  # Create tables if they don't exist
         self.Session = sessionmaker(bind=self.engine)
         self.session = None
+
         # Ensure images directory exists
         if not os.path.exists('./images'):
             os.makedirs('./images')

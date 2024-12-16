@@ -4,7 +4,7 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-
+import logging
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
@@ -24,7 +24,7 @@ class TripScraperSpiderMiddleware:
     def process_spider_input(self, response, spider):
         # Called for each response that goes through the spider
         # middleware and into the spider.
-
+        logging.info(f"Processing response: {response.url}")
         # Should return None or raise an exception.
         return None
 
@@ -33,8 +33,8 @@ class TripScraperSpiderMiddleware:
         # it has processed the response.
 
         # Must return an iterable of Request, or item objects.
-        for i in result:
-            yield i
+        for item in result:
+            yield item
 
     def process_spider_exception(self, response, exception, spider):
         # Called when a spider or process_spider_input() method
@@ -78,7 +78,10 @@ class TripScraperDownloaderMiddleware:
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+        if "User-Agent" not in request.headers:
+            request.headers["User-Agent"] = "TripScraperBot/1.0"
         return None
+       
 
     def process_response(self, request, response, spider):
         # Called with the response returned from the downloader.

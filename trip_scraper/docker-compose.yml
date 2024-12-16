@@ -20,6 +20,7 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql://scraper_user:scraper_password@db:5432/scraper_db
+      PYTHONPATH: /app
     volumes:
       - .:/app
       - ./images:/images
