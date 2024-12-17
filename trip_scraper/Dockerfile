@@ -9,6 +9,9 @@ RUN apt-get update && apt-get install -y gcc libpq-dev
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Ensure the images directory is writable
+RUN mkdir -p /app/images && chmod -R 777 /app/images
+
 COPY . .
 
 # CMD ["scrapy", "crawl", "random"]

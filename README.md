@@ -36,8 +36,8 @@ Before getting started, ensure you have the following installed on your machine:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/trip_scraper.git
-   cd trip_scraper
+   git clone https://github.com/siddiqua14/Scraper_Project.git
+   cd Scraper_Project
    ```
 2. Set up a virtual environment (optional but recommended):
 
@@ -45,6 +45,12 @@ Before getting started, ensure you have the following installed on your machine:
     python3 -m venv .venv       # python -m venv .venv
     source .venv/bin/activate   # On Windows, use .venv\Scripts\activate
     ```
+
+3. Go to the `trip_scraper` for scraper run
+    ```bash
+    cd trip_scraper
+    ```
+
 3. Install required Python dependencies:
 
     ```bash
@@ -142,3 +148,38 @@ This will generate a code coverage report for your Scrapy spider.
 ## Troubleshooting
 - If you encounter issues with database connections, ensure that the PostgreSQL container is running and accessible.
 - For issues with scraping, check the Scrapy logs for errors and ensure that the website structure hasn't changed.
+- ### Database Issues
+    If you encounter issues with storing data in the database, it might be helpful to drop and recreate the `hotels` table. This can be done without dropping the entire database.
+    #### Steps to Drop and Rebuild the `hotels` Table:
+
+    1. **Connect to PostgreSQL**: Access the PostgreSQL container using the following command:
+
+        ```bash
+        docker exec -it postgres_db psql -U scraper_user
+        ```
+
+        Replace `postgres_db` with the name of your PostgreSQL container if it's different.
+
+    2. **Connect to the Database**: Connect to the `scraper_db` (or your relevant database):
+
+        ```sql
+        \c scraper_db;
+        ```
+
+    3. **Drop the `hotels` Table**: Drop the `hotels` table using the following command:
+
+        ```sql
+        DROP TABLE hotels;
+        ```
+
+    4. **Rebuild the Table**: You can now rebuild the `hotels` table by running your Scrapy spider, which will automatically create the table if it doesn't exist and populate it with new data.
+
+        Alternatively, if you have a script for creating tables, you can manually execute it to recreate the schema.
+
+    5. **Exit PostgreSQL**: Once done, exit the PostgreSQL prompt by typing:
+
+        ```sql
+        \q
+        ```
+
+    By following these steps, you can ensure that the `hotels` table is reset and data is inserted again.

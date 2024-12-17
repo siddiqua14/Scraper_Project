@@ -46,7 +46,7 @@ ITEM_PIPELINES = {
 IMAGES_STORE = './images'
 
 # Database URL (read from Docker environment)
-DATABASE_URL = "postgresql://scraper_user:scraper_password@db:5432/scraper_db"
+DATABASE_URL = "psql postgresql://scraper_user:scraper_password@db:5432/scraper_db"
 # Add the necessary settings for database connection
 SQLALCHEMY_DATABASE_URI = DATABASE_URL
 SQLALCHEMY_TRACK_MODIFICATIONS = False

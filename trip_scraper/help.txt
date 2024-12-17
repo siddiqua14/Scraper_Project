@@ -3,6 +3,10 @@
  coverage run -m pytest && coverage report
  coverage report --show-missing
 
+
+gcc: Required for compiling some Python packages.
+libpq-dev: Necessary for PostgreSQL-related libraries like psycopg2.
+
 Test Cases
 test_parse_city
 This test verifies the parse method for parsing inbound cities from the Trip.com website. It checks if the JSON data is correctly extracted from the page and if the city list is parsed successfully.

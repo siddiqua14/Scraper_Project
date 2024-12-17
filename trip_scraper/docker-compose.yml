@@ -23,7 +23,7 @@ services:
       PYTHONPATH: /app
     volumes:
       - .:/app
-      - ./images:/images
+      - ./images:/app/images 
     command: /bin/sh -c "scrapy crawl hotel && tail -f /dev/null"
 volumes:
   db_data:
