@@ -155,7 +155,7 @@ This will generate a code coverage report for your Scrapy spider.
     1. **Connect to PostgreSQL**: Access the PostgreSQL container using the following command:
 
         ```bash
-        docker exec -it postgres_db psql -U scraper_user
+        docker exec -it postgres_db psql -U scraper_user -d scraper_db
         ```
 
         Replace `postgres_db` with the name of your PostgreSQL container if it's different.
